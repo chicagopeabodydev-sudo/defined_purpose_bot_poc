@@ -1,6 +1,6 @@
 # langchain-skill Examples
 
-These examples demonstrate key steps in creating and using LangChain Agents including how to define: Agents, Models, System Prompts, Stort-Term Memory, and Structured Output.
+These examples demonstrate key steps in creating and using LangChain Agents including how to define: Agents, Models, System Prompts, Short-Term Memory, and Structured Output.
 
 ---
 
@@ -27,14 +27,14 @@ agent.invoke(
 
 ---
 
-## Example 2 - Creating an Agent using OpenAI's ChatOpenAI
+## Example 2 - Creating an Agent using Anthropic's ChatAnthropic
 
 ```python
 from langchain.agents import create_agent
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
-model = ChatOpenAI(
-    model="gpt-5",
+model = ChatAnthropic(
+    model="claude-haiku-4-5-20251001",
     temperature=0.1,
     max_tokens=1000,
     timeout=30
@@ -88,7 +88,7 @@ def handle_tool_errors(request, handler):
         )
 
 agent = create_agent(
-    model="gpt-4.1",
+    model="claude-sonnet-4-6",
     tools=[search, get_weather],
     middleware=[handle_tool_errors]
 )
@@ -122,7 +122,7 @@ def user_role_prompt(request: ModelRequest) -> str:
     return base_prompt
 
 agent = create_agent(
-    model="gpt-4.1",
+    model="claude-sonnet-4-6",
     tools=[web_search],
     middleware=[user_role_prompt],
     context_schema=Context
@@ -137,7 +137,7 @@ result = agent.invoke(
 
 ---
 
-## Example 6 - Defining Structured Reponses
+## Example 6 - Defining Structured Responses
 
 ```python
 from pydantic import BaseModel
@@ -151,14 +151,14 @@ class ContactInfo(BaseModel):
     phone: str
 
 agent = create_agent(
-    model="gpt-4.1-mini",
+    model="claude-haiku-4-5-20251001",
     tools=[search_tool],
     response_format=ToolStrategy(ContactInfo)
 )
 
 # Or...use ProviderStrategy to use the model to define the structured output
 # agent = create_agent(
-#     model="gpt-4.1",
+#     model="claude-sonnet-4-6",
 #     response_format=ProviderStrategy(ContactInfo)
 # )
 
@@ -228,3 +228,56 @@ If you'd like me to call you a nickname or use a different name, just say the wo
 ```
 
 ---
+
+## Example 8 - Supervisor Agent Pattern (Fast Food Order Bot)
+
+Routes user input to the appropriate tool: `take_order`, `answer_menu_question`, or `get_error_response`.
+
+```python
+from pydantic import BaseModel
+from typing import Literal
+from langchain.agents import create_agent
+from langchain.agents.structured_output import ProviderStrategy
+from langchain_anthropic import ChatAnthropic
+
+# Structured output tells the supervisor which tool to invoke
+class SupervisorDecision(BaseModel):
+    intent: Literal["order_entry", "menu_question", "off_topic"]
+    response: str  # the text to display to the user
+
+@tool
+def take_order(item: str, quantity: int) -> str:
+    """Record a menu item and quantity in the current order."""
+    # ... implementation
+    return f"Added {quantity}x {item} to your order."
+
+@tool
+def answer_menu_question(question: str) -> str:
+    """Answer a question about the menu."""
+    # ... implementation
+    return "Our burgers start at $5.99."
+
+@tool
+def get_error_response(off_topic_type: str) -> str:
+    """Return a sarcastic redirect for off-topic input."""
+    # ... implementation
+    return "Yeah, I don't do that here. Burger or fries?"
+
+model = ChatAnthropic(model="claude-sonnet-4-6")
+
+supervisor = create_agent(
+    model,
+    tools=[take_order, answer_menu_question, get_error_response],
+    system_prompt=(
+        "You are a sarcastic fast food worker. "
+        "Classify the user's message and call the appropriate tool. "
+        "If the user goes off-topic too many times, end the conversation."
+    ),
+    response_format=ProviderStrategy(SupervisorDecision),
+)
+
+result = supervisor.invoke({
+    "messages": [{"role": "user", "content": "Can I get 2 burgers?"}]
+})
+# SupervisorDecision(intent='order_entry', response='Two burgers. Wow, big spender.')
+```

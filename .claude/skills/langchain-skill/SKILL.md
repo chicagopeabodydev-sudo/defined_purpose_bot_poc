@@ -1,17 +1,17 @@
 ---
 name: langchain-skill
-description: LangChain is a python library that built around modular components that can be chained together (hence the name "LangChain") to create complex workflows.
+description: LangChain is a python library that built around modular components that can be chained together (hence the name "LangChain") to create complex workflows. Use this skill to orchestrate the supervisor agent that routes between take_order, answer_menu_question, and get_error_response tools for the fast food order bot.
 
 ---
 
 # When to use LangChain
-Use LangChain to orchestrate the steps in responding to user input. This includes parsing user input for speific information, determining which tools may help, and generating a response based on a predefined structure.
+Use LangChain to orchestrate the steps in responding to user input. This includes parsing user input for specific information, determining which tools may help, and generating a response based on a predefined structure. In this project, LangChain drives the supervisor agent that routes between `take_order`, `answer_menu_question`, and `get_error_response` tools.
 
 ## Steps to Creating and Using Agents
-1. Define "System Prompt(s)"
-2. Create "Tools" that can help the Agent integrate with external data or components
-3. Create and configure "Model(s)" to use
-4. Define "Structure Output" for predictable results
+1. Define **"System Prompt(s)"**
+2. Create **"Tools"** that can help the Agent integrate with external data or components
+3. Create and configure **"Model(s)"** to use
+4. Define **"Structured Output"** for predictable results
 
 ## Key Concepts
 - **Agents**
@@ -23,16 +23,17 @@ Use LangChain to orchestrate the steps in responding to user input. This include
 - **Short-Term Memory**
 
 ### Two options to create Agents
-1. Use "create_agent"
+1. Use `create_agent`
 2. Use the model provider's package (for more control over the model configuration, initialize a model instance directly using the provider package)
 
 ### Static Model - set once for the Agent
 - simplest solution
+- **This project uses a static model approach** — the model is set once when the agent is created and does not change at runtime
 
 ### Dynamic Models - allow Agents to choose between models at runtime
 - allows for more flexibility
 - can choose best model based on runtime values
-- requires middleware with @wrap_model_call decorator
+- requires middleware with `@wrap_model_call` decorator (see langchain-middleware-skill for details)
 
 ### Messages
 Fundamental unit of context for models that represent the input and output of models, and they contain:
@@ -54,8 +55,8 @@ You can shape how your agent approaches tasks by providing a prompt.
 ### Structured Output
 Return output in a specific format via the response_format parameter.
 - Uses a pydantic model to define the format
-- Use ToolStrategy does not use the model for creating the structured response
-- Use ProviderStrategy to leverage a model's abilities for creating the structured response
+- ToolStrategy does not use the model to create the structured response
+- ProviderStrategy leverages the model's native abilities to create the structured response
 
 ### Conversation History (Short-Term Memory)
 Agents maintain conversation history automatically through message state, and this can use a custom state schema to remember specific information.
@@ -65,7 +66,7 @@ Agents maintain conversation history automatically through message state, and th
 - Short-term Memory Strategies:
   1. Trim Messages - remove first or last messages (you can configure how many)
   2. Summarize Messages - summarize earlier messages and delete them, and then send the summary to the LLM
-  3. Delete Messages - remove messages from LangGraph state permenently
+  3. Delete Messages - remove messages from LangGraph state permanently
 
 
 ## Additional Resources
@@ -77,4 +78,3 @@ Agents maintain conversation history automatically through message state, and th
 - [Tools full documentation](https://docs.langchain.com/oss/python/langchain/tools)
 - [Short-term Memory full documentation](https://docs.langchain.com/oss/python/langchain/short-term-memory)
 - [Structured Output full documentation](https://docs.langchain.com/oss/python/langchain/structured-output)
-- [LangChain RAG Agents](https://docs.langchain.com/oss/python/langchain/rag)
