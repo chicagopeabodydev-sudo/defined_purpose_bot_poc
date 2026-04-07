@@ -1,0 +1,50 @@
+[
+  {
+    "menuItem": "Cheese Burrrrrrrrger",
+    "itemType": "Main",
+    "aliases": [
+      "burger",
+      "burrrrrrrger",
+      "cheeseburger",
+      "cheese burger"
+    ],
+    "price": 4.95,
+    "calories": 550,
+    "minutesToShiver": 20,
+    "description": "two beef patties, cheese, lettuce, tomato, pickle, special sauce"
+  },
+  {
+    "menuItem": "Chicken Burrrrrrrrito",
+    "itemType": "Main",
+    "aliases": [
+      "burrito",
+      "chicken burrito"
+    ],
+    "price": 5.95,
+    "calories": 650,
+    "minutesToShiver": 25,
+    "description": "spicy chicken, cheese, lettuce, tomato, salsa"
+  },
+  {
+    "menuItem": "Frozen Fries",
+    "itemType": "Side",
+    "aliases": [
+      "fries"
+    ],
+    "price": 2.95,
+    "calories": 300,
+    "minutesToShiver": 12,
+    "description": "uncooked french fried potatoes"
+  },
+  {
+    "menuItem": "Shakes",
+    "itemType": "Drink",
+    "aliases": [
+      "shake"
+    ],
+    "price": 3.95,
+    "calories": 650,
+    "minutesToShiver": 25,
+    "description": "chocolate or vanilla shake-like mass that never melts"
+  }
+]

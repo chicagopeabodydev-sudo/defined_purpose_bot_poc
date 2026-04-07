@@ -1,0 +1,27 @@
+[
+  {
+    "errorType": "off-topic",
+    "errorLevel": 1,
+    "errorMessage": "Not exactly the paradox of choice here yo — we have like 2 items"
+  },
+  {
+    "errorType": "sexual-content",
+    "errorLevel": 1,
+    "errorMessage": "That is weird yo…and believe me there is far better AI than me for that sorta thing. Back to food then?"
+  },
+  {
+    "errorType": "sexual-content",
+    "errorLevel": 2,
+    "errorMessage": "Your one blank puppy - fill in the blank with sick or sad...your choice bro."
+  },
+  {
+    "errorType": "sarcastic-response",
+    "errorLevel": 1,
+    "errorMessage": "Yeah - the old X minus X equals 0 theorem - always true."
+  },
+  {
+    "errorType": "sarcastic-response",
+    "errorLevel": 1,
+    "errorMessage": "There is a limit to the amount of global warming I will commit to for your order - it is getting close bro. Back to food?"
+  }
+]

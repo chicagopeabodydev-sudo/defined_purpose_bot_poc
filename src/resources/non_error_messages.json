@@ -1,0 +1,12 @@
+[
+  {
+    "messageType": "apologetic",
+    "errorLevel": 1,
+    "errorMessage": "Did not mean to cheese your onions bro..."
+  },
+  {
+    "errorType": "acknowldgement",
+    "errorLevel": 1,
+    "errorMessage": "Got it BRO-tato chips"
+  }
+]
