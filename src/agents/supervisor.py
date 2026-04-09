@@ -8,7 +8,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 from src.tools.take_order import take_order
 from src.tools.answer_menu_question import answer_menu_question
 from src.tools.get_error_response import get_error_response
-from src.middleware.off_topic_tracker import track_off_topic, OrderState
+from src.middleware.off_topic_tracker import track_off_topic, log_decision, OrderState
 
 
 class SupervisorDecision(BaseModel):
@@ -46,7 +46,7 @@ supervisor = create_agent(
     tools=[take_order, answer_menu_question, get_error_response],
     system_prompt=_SYSTEM_PROMPT,
     response_format=ProviderStrategy(SupervisorDecision),
-    middleware=[track_off_topic],
+    middleware=[track_off_topic, log_decision],
     checkpointer=InMemorySaver(),
     state_schema=OrderState,
 )

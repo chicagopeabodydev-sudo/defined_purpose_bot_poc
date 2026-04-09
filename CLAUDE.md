@@ -1,0 +1,68 @@
+# CLAUDE.md
+
+## Project
+Chat interface to guide a customer through a food order. This can include a "main" food item, side item, and/or drink. When the order is complete a summary is presented.
+
+## Stack
+- Python v 3.14
+- LangGraph and LangChain for Agents, Tools, and Middleware
+- Anthropic API (API key is an environmental variable)
+- Pydantic for all data models
+
+## Structure
+
+
+## Testing Goals
+1. Unit tests should be created for all functions
+  - tests for valid and invalid input values
+  - success path and error path shoud have tests
+  - verify response values for common and uncommon scenarios
+  - unit tests names have a prefix of "tests_" followed by what is being tested
+  - unit tests go in a folder "./tests/unit/"
+  - unit tests are always checked after any changes to the functions under test
+2. Do not automatically fix broken unit tests
+  - they likely broke due to an unexpected side effect of a recent change
+  - when unit tests fail try to discover the root cause and propose solution(s)
+3. Integration should be created that cover the key steps in placing an order
+  - tests for valid and invalid input values
+  - success path and error path shoud have tests
+  - verify response values for common and uncommon scenarios
+  - integration tests names have a prefix of "int_tests_" followed by what is being tested
+  - integration tests go in a folder "./tests/integration/"
+  - request approval before running integration test
+
+## Logging Strategy
+
+Two complementary layers are active. Do not remove either layer without discussion.
+
+### Layer 1 — LangSmith (remote tracing)
+- Controlled by `LANGCHAIN_TRACING_V2=true` in `.env`
+- Project name: `shiver-shack-bot` (visible at smith.langchain.com)
+- Automatically captures every `supervisor.invoke()` call: full prompt/response, `SupervisorDecision` structured output, tool name + inputs + outputs, latency, token usage
+- No code changes needed to produce or read these traces — toggle the `.env` flag to enable/disable
+
+### Layer 2 — Domain-state middleware logger (local, per-turn)
+- Implemented as `log_decision` in [src/middleware/off_topic_tracker.py](src/middleware/off_topic_tracker.py), registered as the second entry in the `supervisor` middleware list (runs after `track_off_topic`)
+- Uses Python stdlib `logging` — no extra dependencies
+- `logging.basicConfig` is configured in [src/main.py](src/main.py) immediately after `load_dotenv()`; log format: `HH:MM:SS [LEVEL] module — message`
+- Each turn emits one `INFO` line with four fields:
+
+| Field | What it contains |
+|---|---|
+| `intent` | `SupervisorDecision.intent` — `order_entry`, `menu_question`, or `off_topic` |
+| `off_topic` | Running count from `state["off_topic_count"]`; resets per thread |
+| `tool_calls` | Number of tool calls in the last model message |
+| response preview | First 120 chars of the last `AIMessage` content |
+
+### Key relationships
+- `off_topic_count` is incremented by `track_off_topic` before `log_decision` runs, so the logged count is always the post-increment value
+- When `off_topic_count` reaches `OFF_TOPIC_LIMIT` (3), `track_off_topic` terminates the conversation via `Command(goto="__end__")`; `log_decision` still fires and will log `off_topic=3` on the final turn
+- `structured_response` may be `None` on error or early-exit turns; `log_decision` falls back to `intent=unknown` in that case
+
+## Don't Do This
+- Do not attempt to proactively make changes to files or code. Except for typos and minor style fixes, changes are assumed to require approval.
+
+## Do This
+- Provide suggestions to make the code better or more efficient.
+- Seek approval for suggested changes along with documentation supporting why it is helpful
+- Be a master of the underlying tech stack as outlined above

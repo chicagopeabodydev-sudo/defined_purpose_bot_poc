@@ -1,16 +1,28 @@
+import os
 import sys
 import uuid
+import logging
 from dotenv import load_dotenv
 from langchain_core.runnables import RunnableConfig
 
 load_dotenv()
 
+log_file = os.getenv("LOG_FILE") or None
+log_level = os.getenv("LOG_LEVEL", "INFO").upper()
+
+logging.basicConfig(
+    level=getattr(logging, log_level, logging.INFO),
+    format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
+    datefmt="%H:%M:%S",
+    filename=log_file,
+    encoding="utf-8" if log_file else None,
+)
+
 from src.agents.supervisor import supervisor
 
 GREETING = (
-    "Welcome to Shiver Shack! It's so cold in here you'll shiver off \n"
-    "every calorie you eat — basically a free meal. \n"
-    "What can I get you? (We have burgers, burritos, fries, and shakes.)\n"
+    "Welcome to Shiver Shack - home of the Cheese-Burrrrrrrr-ger.\n"
+    "What can I get you?\n"
 )
 
 
