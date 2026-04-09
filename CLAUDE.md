@@ -11,6 +11,15 @@ Chat interface to guide a customer through a food order. This can include a "mai
 
 ## Structure
 
+The codebase is organized into four layers under `src/`:
+
+- **agents/** — The supervisor agent (`supervisor.py`) is the central routing hub. It classifies user input into `order_entry`, `menu_question`, or `off_topic` via `SupervisorDecision` structured output and delegates to the appropriate tool.
+- **middleware/** — `after_model` hooks that run after every model response. Currently: `track_off_topic` (enforces the 3-strike off-topic limit) and `log_decision` (emits a structured INFO log per turn).
+- **tools/** — One function per tool, called by the supervisor: `take_order`, `answer_menu_question`, `get_error_response`, `get_non_error_response`, `summarize_order`.
+- **models/** — Pydantic `BaseModel` definitions: `OrderEntry`, `CompleteOrder`, `ChatResponse`.
+- **resources/** — Static JSON files loaded at runtime: `menu.json`, `error_messages.json`, `non_error_messages.json`.
+
+`src/main.py` is the entry point: initializes logging, loads env vars, and runs the REPL loop.
 
 ## Testing Goals
 1. Unit tests should be created for all functions
