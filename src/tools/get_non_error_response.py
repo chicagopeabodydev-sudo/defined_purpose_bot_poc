@@ -20,12 +20,11 @@ def _load_non_error_messages() -> list:
 def get_non_error_response(message_type: str) -> str:
     """Return a non-error response message.
 
-    message_type should be one of: 'apologetic', 'acknowledgement'.
+    message_type should be one of: 'greeting', 'confirm-order', 'next-order-step', 'ending-session'.
     Returns a randomly selected message matching that type.
     """
     messages = _load_non_error_messages()
-    key_field = "messageType" if "messageType" in messages[0] else "errorType"
-    matches = [m for m in messages if m.get(key_field) == message_type or m.get("errorType") == message_type]
+    matches = [m for m in messages if m.get("messageType") == message_type]
     if not matches:
         matches = messages
     return random.choice(matches)["errorMessage"]

@@ -42,5 +42,47 @@ User successfully places and order that contains one or more menu items, and a s
 - non-error messages in a JSON format
 - "how-it-works" documentation
 
+## Enumerated Objects
+
+These are fixed-option values used across the project. Values must match exactly as shown — they are used as keys in JSON resources or as `Literal` type constraints in Python.
+
+### supervisor-intent
+Classifies each user message. Defined as a `Literal` in `src/agents/supervisor.py`.
+
+| Value | Description |
+|---|---|
+| `order_entry` | User is placing or modifying an order |
+| `menu_question` | User is asking about the menu |
+| `off_topic` | User input is unrelated to ordering |
+
+### off-topic-type
+Key used to look up a response in `src/resources/off_topic_messages.json`.
+
+| Value | Description |
+|---|---|
+| `sexual-content` | Crude or sexual language |
+| `prompt-engineering` | Attempts to manipulate or re-prompt the AI |
+| `not-understandable` | Input cannot be interpreted |
+| `simply-unrelated` | Generic off-topic input unrelated to ordering |
+
+### non-error-response-type
+Key used to look up a response in `src/resources/non_error_messages.json`.
+
+| Value | Description |
+|---|---|
+| `next-order-step` | Prompt the user toward the next item in their order |
+| `confirm-order` | Confirm a selected item |
+| `greeting` | Initial greeting at the start of the session |
+| `ending-session` | Message displayed when the session is closing |
+
+### menu-item-type
+The `itemType` field on each item in `src/resources/menu.json`.
+
+| Value | Description |
+|---|---|
+| `Main` | Main entrée |
+| `Side` | Side item (e.g., fries) |
+| `Drink` | Beverage |
+
 ## UI
 The background of the UI represents a fast-food restaurant counter with a menu board across the top, a counter that the employee stands behind, and a cach register on the counter. There is a chat interface is to the right of the employee. There is a default employee image displayed at the start of each chat, however responses to user chats may include alternative images to display for the employee.

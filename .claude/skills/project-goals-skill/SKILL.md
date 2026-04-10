@@ -20,8 +20,9 @@ Users are being guided down the process of ordering a meal. Users should be limi
 2. Generate an appropriate response for the off-topic-type that tries to return to the food ordering process.
 3. If greater than the defined off-topic limit, end the chat conversation with the user.
 
-## Limit LLM calls and Token Usage
-This goal is achieved by not calling the LLM to generate the text of every response. In many cases how to respond can be determined when parsing the user's input. In these cases, a predefined response will be selected from the system's resources in place of the LLM call.
+## Short-Circuit LLM Calls for Responses
+### Goal is to Limit LLM calls and Token Usage
+This goal is achieved by not calling the LLM to generate the text of every response. In many cases how to respond can be determined when parsing the user's input. In these cases, a predefined response will be selected from the system's resources in place of an LLM call.
 
 ### When TO USE the LLM/Model
 1. To parse user input and place it into one of three buckets:

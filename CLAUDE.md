@@ -68,10 +68,16 @@ Two complementary layers are active. Do not remove either layer without discussi
 - When `off_topic_count` reaches `OFF_TOPIC_LIMIT` (3), `track_off_topic` terminates the conversation via `Command(goto="__end__")`; `log_decision` still fires and will log `off_topic=3` on the final turn
 - `structured_response` may be `None` on error or early-exit turns; `log_decision` falls back to `intent=unknown` in that case
 
-## Don't Do This
-- Do not attempt to proactively make changes to files or code. Except for typos and minor style fixes, changes are assumed to require approval.
+## Do NOT Do This
+- Do not proactively make changes to files or code. Except  when explicitly instructed it's OK to make certain changes (for example, typos and/or minor style fixes), assume all changes require approval.
 
-## Do This
+## DO This
 - Provide suggestions to make the code better or more efficient.
-- Seek approval for suggested changes along with documentation supporting why it is helpful
-- Be a master of the underlying tech stack as outlined above
+- Seek approval for suggested changes along with documentation supporting why it is helpful.
+- Be a master of the underlying tech stack as outlined above.
+
+
+## Additional Resources
+[Python unit-tests overview](https://docs.python.org/3/library/unittest.html)
+[PyTest documentation](https://docs.pytest.org/)
+[Project overview](./.claude/skills/project-overview-skill/)

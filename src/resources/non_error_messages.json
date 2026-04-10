@@ -1,12 +1,22 @@
 [
   {
-    "messageType": "apologetic",
+    "messageType": "greeting",
     "errorLevel": 1,
-    "errorMessage": "Did not mean to cheese your onions bro..."
+    "errorMessage": "Welcome to Shiver Shack! What can I get for you today?"
   },
   {
-    "errorType": "acknowldgement",
+    "messageType": "confirm-order",
     "errorLevel": 1,
-    "errorMessage": "Got it BRO-tato chips"
+    "errorMessage": "Got it — added to your order!"
+  },
+  {
+    "messageType": "next-order-step",
+    "errorLevel": 1,
+    "errorMessage": "Would you like to add a side or a drink to go with that?"
+  },
+  {
+    "messageType": "ending-session",
+    "errorLevel": 1,
+    "errorMessage": "Alright, that's a wrap! See you next time."
   }
 ]
