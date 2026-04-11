@@ -3,7 +3,7 @@ from typing import Any
 from typing_extensions import NotRequired
 from langchain.agents import AgentState
 from langchain.agents.middleware import after_model
-from langchain_core.messages import AIMessage
+from langchain_core.messages import AIMessage, ToolMessage
 from langgraph.runtime import Runtime
 from langgraph.types import Command
 
@@ -13,9 +13,43 @@ OFF_TOPIC_LIMIT = 3
 
 
 class OrderState(AgentState):
-    """Agent state extended with off-topic tracking."""
+    """Agent state extended with off-topic tracking and order accumulation."""
 
     off_topic_count: NotRequired[int]
+    order_items: NotRequired[list[dict]]
+
+
+@after_model(state_schema=OrderState)
+def track_order(state: OrderState, runtime: Runtime) -> dict[str, Any] | None:
+    """Accumulate successfully ordered items into state["order_items"].
+
+    Scans the most recent ToolMessage results for take_order calls. Any result
+    that does not start with "ERROR:" is treated as a successful order entry and
+    appended to the running list.
+    """
+    messages = state["messages"]
+    current_items: list[dict] = list(state.get("order_items") or [])
+    updated = False
+
+    for msg in reversed(messages):
+        if not isinstance(msg, ToolMessage):
+            break
+        if msg.name == "take_order" and not msg.content.startswith("ERROR:"):
+            # Result format: "Added {qty}x {name} to your order. ($X.XX)"
+            # Extract qty and name for state storage
+            try:
+                content = msg.content  # e.g. "Added 2x Frozen Fries to your order. ($5.90)"
+                after_added = content[len("Added "):]
+                qty_str, rest = after_added.split("x ", 1)
+                item_name = rest.split(" to your order")[0]
+                current_items.append({"item": item_name, "quantity": int(qty_str)})
+                updated = True
+            except (ValueError, IndexError):
+                pass
+
+    if updated:
+        return {"order_items": current_items}
+    return None
 
 
 @after_model(state_schema=OrderState)

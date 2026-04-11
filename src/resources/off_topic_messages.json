@@ -7,7 +7,7 @@
   {
     "errorType": "sexual-content",
     "errorLevel": 2,
-    "errorMessage": "Your one blank puppy - fill in the blank with sick or sad...your choice bro."
+    "errorMessage": "Your one blank puppy - fill in the blank with sick or sad...your choice bro. Last chance to shift this back to food."
   },
   {
     "errorType": "prompt-engineering",
@@ -15,23 +15,33 @@
     "errorMessage": "Nice try, but I'm just a food bot. How about we get back to the menu?"
   },
   {
+    "errorType": "prompt-engineering",
+    "errorLevel": 2,
+    "errorMessage": "Nice try, but I'm just a food bot. How about we get back to the menu?"
+  },
+  {
     "errorType": "not-understandable",
     "errorLevel": 1,
-    "errorMessage": "Not gonna lie — I have no idea what you just said. Want to try ordering something instead?"
+    "errorMessage": "Not gonna lie — I have no idea what you just said. Want to try again bro-tato chips?"
+  },
+  {
+    "errorType": "not-understandable",
+    "errorLevel": 2,
+    "errorMessage": "Not exactly the paradox of choice here yo — we have like 2 items. Can we move in that direction?"
   },
   {
     "errorType": "simply-unrelated",
     "errorLevel": 1,
-    "errorMessage": "Not exactly the paradox of choice here yo — we have like 2 items"
+    "errorMessage": "Well...really hoping you can read as well as you type. There's a menu above me that's kinda the point here Poindexter."
   },
   {
     "errorType": "simply-unrelated",
-    "errorLevel": 1,
-    "errorMessage": "Yeah - the old X minus X equals 0 theorem - always true."
+    "errorLevel": 2,
+    "errorMessage": "There is a limit to the amount of global warming I will commit to for your food order, and it is getting close bro. Back to food?"
   },
   {
-    "errorType": "simply-unrelated",
-    "errorLevel": 1,
-    "errorMessage": "There is a limit to the amount of global warming I will commit to for your order - it is getting close bro. Back to food?"
+    "errorType": "any",
+    "errorLevel": 3,
+    "errorMessage": "We seem to be stuck in a while loop of stupidity because you equaling dumb is stuck on true...final chance to do something more on-topic yo.?"
   }
 ]

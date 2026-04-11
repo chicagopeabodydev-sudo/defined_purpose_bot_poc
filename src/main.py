@@ -1,6 +1,7 @@
 import os
 import sys
 import uuid
+import json
 import logging
 from dotenv import load_dotenv
 from langchain_core.runnables import RunnableConfig
@@ -20,17 +21,20 @@ logging.basicConfig(
 
 from src.agents.supervisor import supervisor
 
-GREETING = (
-    "Welcome to Shiver Shack - home of the Cheese-Burrrrrrrr-ger.\n"
-    "What can I get you?\n"
-)
+_NON_ERROR_PATH = os.path.join(os.path.dirname(__file__), "resources", "non_error_messages.json")
+
+def _get_greeting() -> str:
+    with open(_NON_ERROR_PATH) as f:
+        messages = json.load(f)
+    matches = [m for m in messages if m.get("messageType") == "greeting"]
+    return matches[0]["errorMessage"] if matches else "Welcome to Shiver Shack!"
 
 
 def run():
     thread_id = str(uuid.uuid4())
     config: RunnableConfig = {"configurable": {"thread_id": thread_id}}
 
-    print(GREETING)
+    print(_get_greeting())
 
     while True:
         try:

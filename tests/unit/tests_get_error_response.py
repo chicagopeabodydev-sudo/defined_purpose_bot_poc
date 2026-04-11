@@ -42,19 +42,47 @@ class TestGetErrorResponse:
             pool = mock_choice.call_args[0][0]
         assert all(m["errorType"] == "simply-unrelated" for m in pool)
 
-    def test_sexual_content_pool_size(self):
+    def test_level_1_returns_level_1_message(self):
         with patch(_PATCH_TARGET) as mock_choice:
             mock_choice.return_value = {"errorMessage": "x"}
-            get_error_response.func(error_type="sexual-content")
+            get_error_response.func(error_type="simply-unrelated", level=1)
             pool = mock_choice.call_args[0][0]
-        assert len(pool) == 2
+        assert all(m["errorLevel"] == 1 for m in pool)
 
-    def test_fallback_pool_size(self):
+    def test_level_2_returns_level_2_message(self):
+        with patch(_PATCH_TARGET) as mock_choice:
+            mock_choice.return_value = {"errorMessage": "x"}
+            get_error_response.func(error_type="simply-unrelated", level=2)
+            pool = mock_choice.call_args[0][0]
+        assert all(m["errorLevel"] == 2 for m in pool)
+
+    def test_level_3_returns_any_type_message(self):
+        with patch(_PATCH_TARGET) as mock_choice:
+            mock_choice.return_value = {"errorMessage": "x"}
+            get_error_response.func(error_type="simply-unrelated", level=3)
+            pool = mock_choice.call_args[0][0]
+        assert all(m["errorType"] == "any" for m in pool)
+
+    def test_level_above_3_also_returns_any_type_message(self):
+        with patch(_PATCH_TARGET) as mock_choice:
+            mock_choice.return_value = {"errorMessage": "x"}
+            get_error_response.func(error_type="simply-unrelated", level=5)
+            pool = mock_choice.call_args[0][0]
+        assert all(m["errorType"] == "any" for m in pool)
+
+    def test_level_3_ignores_error_type(self):
+        with patch(_PATCH_TARGET) as mock_choice:
+            mock_choice.return_value = {"errorMessage": "x"}
+            get_error_response.func(error_type="sexual-content", level=3)
+            pool = mock_choice.call_args[0][0]
+        assert all(m["errorType"] == "any" for m in pool)
+
+    def test_default_level_is_1(self):
         with patch(_PATCH_TARGET) as mock_choice:
             mock_choice.return_value = {"errorMessage": "x"}
             get_error_response.func(error_type="simply-unrelated")
             pool = mock_choice.call_args[0][0]
-        assert len(pool) == 3
+        assert all(m["errorLevel"] == 1 for m in pool)
 
     def test_messages_loaded_once(self, reset_error_cache):
         real_open = open
