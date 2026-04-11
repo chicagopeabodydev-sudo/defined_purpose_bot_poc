@@ -40,6 +40,16 @@
     "errorMessage": "There is a limit to the amount of global warming I will commit to for your food order, and it is getting close bro. Back to food?"
   },
   {
+    "errorType": "invalid-menu-item",
+    "errorLevel": 1,
+    "errorMessage": "Oh sure, we definitely serve that here — right next to our unicorn steaks. There's a menu literally above my head, champ. Burger, burrito, fries, or shake. Pick one."
+  },
+  {
+    "errorType": "invalid-menu-item",
+    "errorLevel": 2,
+    "errorMessage": "Still ordering things we don't have? Bold strategy. The menu hasn't changed in the last 30 seconds — Burger, Burrito, Fries, Shake. That's it. That's the whole list."
+  },
+  {
     "errorType": "any",
     "errorLevel": 3,
     "errorMessage": "We seem to be stuck in a while loop of stupidity because you equaling dumb is stuck on true...final chance to do something more on-topic yo.?"

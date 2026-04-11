@@ -84,6 +84,25 @@ class TestGetErrorResponse:
             pool = mock_choice.call_args[0][0]
         assert all(m["errorLevel"] == 1 for m in pool)
 
+    def test_invalid_menu_item_returns_message(self):
+        with patch(_PATCH_TARGET, return_value={"errorMessage": "fixed"}):
+            result = get_error_response.func(error_type="invalid-menu-item")
+        assert result == "fixed"
+
+    def test_invalid_menu_item_level_1_returns_level_1_message(self):
+        with patch(_PATCH_TARGET) as mock_choice:
+            mock_choice.return_value = {"errorMessage": "x"}
+            get_error_response.func(error_type="invalid-menu-item", level=1)
+            pool = mock_choice.call_args[0][0]
+        assert all(m["errorLevel"] == 1 for m in pool)
+
+    def test_invalid_menu_item_level_2_returns_level_2_message(self):
+        with patch(_PATCH_TARGET) as mock_choice:
+            mock_choice.return_value = {"errorMessage": "x"}
+            get_error_response.func(error_type="invalid-menu-item", level=2)
+            pool = mock_choice.call_args[0][0]
+        assert all(m["errorLevel"] == 2 for m in pool)
+
     def test_messages_loaded_once(self, reset_error_cache):
         real_open = open
         call_count = {"n": 0}

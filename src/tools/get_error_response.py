@@ -20,7 +20,7 @@ def _load_error_messages() -> list:
 def get_error_response(error_type: str, level: int = 1) -> str:
     """Return a sarcastic redirect message for off-topic or invalid input.
 
-    error_type should be one of: 'sexual-content', 'prompt-engineering', 'not-understandable', 'simply-unrelated'.
+    error_type should be one of: 'sexual-content', 'prompt-engineering', 'not-understandable', 'simply-unrelated', 'invalid-menu-item'.
     level is the escalation level for this session (1=first off-topic, 2=second, 3+=final warning).
     At level 3 or higher, returns the universal final-warning message regardless of error_type.
     """

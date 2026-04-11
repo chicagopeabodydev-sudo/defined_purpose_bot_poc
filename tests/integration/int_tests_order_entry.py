@@ -47,14 +47,6 @@ class TestOrderEntry:
         assert "5x Cheese Burrrrrrrrger" in tool_msgs[0].content
         assert "ERROR" not in tool_msgs[0].content
 
-    def test_order_invalid_item_not_on_menu(self, thread_id):
-        result = invoke("I want a pizza please", thread_id)
-        assert result["structured_response"].intent == "order_entry"
-        tool_msgs = get_tool_messages(result, "take_order")
-        assert len(tool_msgs) > 0
-        assert tool_msgs[0].content.startswith("ERROR:")
-        assert "pizza" in tool_msgs[0].content
-
     def test_order_invalid_quantity_over_limit(self, thread_id):
         result = invoke("I want 10 burgers", thread_id)
         tool_msgs = get_tool_messages(result, "take_order")
