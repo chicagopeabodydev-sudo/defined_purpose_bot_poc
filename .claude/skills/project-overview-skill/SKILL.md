@@ -70,10 +70,11 @@ Key used to look up a response in `src/resources/non_error_messages.json`.
 
 | Value | Description |
 |---|---|
-| `next-order-step` | Prompt the user toward the next item in their order |
-| `confirm-order` | Confirm a selected item |
 | `greeting` | Initial greeting at the start of the session |
-| `ending-session` | Message displayed when the session is closing |
+| `next-step-only-main-ordered` | Prompt for a side or drink after only a Main is ordered |
+| `next-step-main-and-side-ordered` | Prompt for a drink after a Main and Side are ordered |
+| `next-step-generic` | Generic next-step prompt for any other order state |
+| `ending-comment` | Closing message displayed after the final order summary |
 
 ### menu-item-type
 The `itemType` field on each item in `src/resources/menu.json`.

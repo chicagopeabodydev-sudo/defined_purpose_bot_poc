@@ -1,22 +1,38 @@
 [
   {
     "messageType": "greeting",
-    "errorLevel": 1,
-    "errorMessage": "Welcome to Shiver Shack! What can I get for you today?"
+    "message": "Welcome to Shiver Shack! Where the food is hot and you're not!"
   },
   {
-    "messageType": "confirm-order",
-    "errorLevel": 1,
-    "errorMessage": "Got it — added to your order!"
+    "messageType": "greeting",
+    "message": "Welcome to Siver Shack. Home of the cheese-brrrrrrrrger. What can I get you?"
   },
   {
-    "messageType": "next-order-step",
-    "errorLevel": 1,
-    "errorMessage": "Would you like to add a side or a drink to go with that?"
+    "messageType": "next-step-only-main-ordered",
+    "message": "Would you like to add a side or a drink to go with that?"
   },
   {
-    "messageType": "ending-session",
-    "errorLevel": 1,
-    "errorMessage": "Alright, that's a wrap! See you next time."
+    "messageType": "next-step-only-main-ordered",
+    "message": "Care for a side of fries? It's fast because we don't cook them."
+  },
+  {
+    "messageType": "next-step-main-and-side-ordered",
+    "message": "Would you like one of our shakes? They're a miracle of science."
+  },
+  {
+    "messageType": "next-step-generic",
+    "message": "OK. Can I get you anything else?"
+  },
+  {
+    "messageType": "next-step-generic",
+    "message": "Okey dokey bro-tato-chips. Anything else?"
+  },
+  {
+    "messageType": "ending-comment",
+    "message": "Alright, please enjoy and be careful of frost bite."
+  },
+  {
+    "messageType": "ending-comment",
+    "message": "All set. Be CHILL bro!"
   }
 ]

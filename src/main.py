@@ -3,6 +3,7 @@ import sys
 import uuid
 import json
 import logging
+import random
 from dotenv import load_dotenv
 from langchain_core.runnables import RunnableConfig
 
@@ -27,7 +28,7 @@ def _get_greeting() -> str:
     with open(_NON_ERROR_PATH) as f:
         messages = json.load(f)
     matches = [m for m in messages if m.get("messageType") == "greeting"]
-    return matches[0]["errorMessage"] if matches else "Welcome to Shiver Shack!"
+    return random.choice(matches)["message"] if matches else "Welcome to Shiver Shack!"
 
 
 def run():

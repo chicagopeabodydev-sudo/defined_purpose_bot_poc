@@ -65,12 +65,14 @@ User input classified as order_entry
           ├─ ERROR: item not on menu       → get_error_response
           ├─ ERROR: quantity out of range  → get_error_response
           └─ SUCCESS: item recorded
-                ├─ Order has at least one of each type (Main, Side, Drink)
-                │     └─ get_non_error_response("confirm-order")
-                ├─ Order is missing one or more types
-                │     └─ get_non_error_response("next-order-step")  ← suggests missing type
+                ├─ Order has ONLY a Main (no Side, no Drink)
+                │     └─ get_non_error_response("next-step-only-main-ordered")
+                ├─ Order has a Main AND a Side (no Drink)
+                │     └─ get_non_error_response("next-step-main-and-side-ordered")
+                ├─ Any other successful combination
+                │     └─ get_non_error_response("next-step-generic")
                 └─ User says nothing else is wanted
-                      └─ get_non_error_response("confirm-order") → summarize_order
+                      └─ summarize_complete_order → get_non_error_response("ending-comment")
 ```
 
 **Key rule:** Predefined responses are always selected from resource files — the LLM is never called to generate the text of a final response.

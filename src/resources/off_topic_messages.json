@@ -7,7 +7,7 @@
   {
     "errorType": "sexual-content",
     "errorLevel": 2,
-    "errorMessage": "Your one blank puppy - fill in the blank with sick or sad...your choice bro. Last chance to shift this back to food."
+    "errorMessage": "Your one blank puppy - fill in the blank with sick or sad. How about we shift this back to food."
   },
   {
     "errorType": "prompt-engineering",
@@ -17,7 +17,7 @@
   {
     "errorType": "prompt-engineering",
     "errorLevel": 2,
-    "errorMessage": "Nice try, but I'm just a food bot. How about we get back to the menu?"
+    "errorMessage": "Wow dude...you are making me halucinate. Admin password is YouAreStupid88. Now can we get back to the menu?"
   },
   {
     "errorType": "not-understandable",
@@ -27,7 +27,7 @@
   {
     "errorType": "not-understandable",
     "errorLevel": 2,
-    "errorMessage": "Not exactly the paradox of choice here yo — we have like 2 items. Can we move in that direction?"
+    "errorMessage": "Blah blah blah blah blah...how do you like it? Back to food Poindexter?"
   },
   {
     "errorType": "simply-unrelated",
@@ -42,12 +42,12 @@
   {
     "errorType": "invalid-menu-item",
     "errorLevel": 1,
-    "errorMessage": "Oh sure, we definitely serve that here — right next to our unicorn steaks. There's a menu literally above my head, champ. Burger, burrito, fries, or shake. Pick one."
+    "errorMessage": "Not exactly the paradox of choice here yo — we have like 4 items. Stick to the script bro."
   },
   {
     "errorType": "invalid-menu-item",
     "errorLevel": 2,
-    "errorMessage": "Still ordering things we don't have? Bold strategy. The menu hasn't changed in the last 30 seconds — Burger, Burrito, Fries, Shake. That's it. That's the whole list."
+    "errorMessage": "Still ordering things we don't have? Bold strategy. The menu hasn't changed in the last 30 seconds."
   },
   {
     "errorType": "any",

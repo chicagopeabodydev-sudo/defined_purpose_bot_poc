@@ -6,10 +6,10 @@ A user orders one of each menu item type. The chatbot suggests the next item typ
 
 | Turn | User Input | Intent | Tool Called | Response Type |
 |---|---|---|---|---|
-| 1 | "I'd like a cheeseburger" | `order_entry` | `take_order("Cheese Burrrrrrrrger", 1)` | `get_non_error_response("next-order-step")` |
-| 2 | "and some fries" | `order_entry` | `take_order("Frozen Fries", 1)` | `get_non_error_response("next-order-step")` |
-| 3 | "and a shake" | `order_entry` | `take_order("Shakes", 1)` | `get_non_error_response("confirm-order")` |
-| 4 | "that's all" | `order_entry` | `summarize_order` | final order summary |
+| 1 | "I'd like a cheeseburger" | `order_entry` | `take_order("Cheese Burrrrrrrrger", 1)` | `get_non_error_response("next-step-only-main-ordered")` |
+| 2 | "and some fries" | `order_entry` | `take_order("Frozen Fries", 1)` | `get_non_error_response("next-step-main-and-side-ordered")` |
+| 3 | "and a shake" | `order_entry` | `take_order("Shakes", 1)` | `get_non_error_response("next-step-generic")` |
+| 4 | "that's all" | `order_entry` | `summarize_complete_order` then `get_non_error_response("ending-comment")` | final summary + ending message |
 
 ---
 
@@ -20,7 +20,7 @@ User attempts to order something not on the menu. The tool returns an error stri
 | Turn | User Input | Intent | Tool Called | Result |
 |---|---|---|---|---|
 | 1 | "I want a hot dog" | `order_entry` | `take_order("hot dog", 1)` | `ERROR: 'hot dog' is not on our menu. Available items: ...` |
-| 2 | "fine, a burrito then" | `order_entry` | `take_order("Chicken Burrrrrrrrito", 1)` | `get_non_error_response("next-order-step")` |
+| 2 | "fine, a burrito then" | `order_entry` | `take_order("Chicken Burrrrrrrrito", 1)` | `get_non_error_response("next-step-generic")` |
 
 ---
 
@@ -31,7 +31,7 @@ User requests more than 5 of an item. The tool rejects it before recording anyth
 | Turn | User Input | Intent | Tool Called | Result |
 |---|---|---|---|---|
 | 1 | "give me 10 shakes" | `order_entry` | `take_order("Shakes", 10)` | `ERROR: Quantity must be between 1 and 5. You requested 10.` |
-| 2 | "ok, 2 shakes" | `order_entry` | `take_order("Shakes", 2)` | `get_non_error_response("next-order-step")` |
+| 2 | "ok, 2 shakes" | `order_entry` | `take_order("Shakes", 2)` | `get_non_error_response("next-step-generic")` |
 
 ---
 

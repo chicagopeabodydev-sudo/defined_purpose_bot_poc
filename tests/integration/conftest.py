@@ -1,6 +1,9 @@
 import os
 import uuid
 import pytest
+from dotenv import load_dotenv
+
+load_dotenv()
 
 if not os.getenv("ANTHROPIC_API_KEY"):
     pytest.skip("ANTHROPIC_API_KEY not set", allow_module_level=True)

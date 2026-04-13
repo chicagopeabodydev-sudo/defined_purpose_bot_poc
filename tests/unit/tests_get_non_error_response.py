@@ -8,40 +8,47 @@ _PATCH_TARGET = "src.tools.get_non_error_response.random.choice"
 class TestGetNonErrorResponse:
 
     def test_greeting_returns_message(self):
-        with patch(_PATCH_TARGET, return_value={"errorMessage": "fixed"}):
+        with patch(_PATCH_TARGET, return_value={"message": "fixed"}):
             result = get_non_error_response.func(message_type="greeting")
         assert result == "fixed"
 
-    def test_confirm_order_returns_message(self):
-        with patch(_PATCH_TARGET, return_value={"errorMessage": "fixed"}):
-            result = get_non_error_response.func(message_type="confirm-order")
+    def test_next_step_only_main_ordered_returns_message(self):
+        with patch(_PATCH_TARGET, return_value={"message": "fixed"}):
+            result = get_non_error_response.func(message_type="next-step-only-main-ordered")
         assert result == "fixed"
 
-    def test_next_order_step_returns_message(self):
-        with patch(_PATCH_TARGET, return_value={"errorMessage": "fixed"}):
-            result = get_non_error_response.func(message_type="next-order-step")
+    def test_next_step_main_and_side_ordered_returns_message(self):
+        with patch(_PATCH_TARGET, return_value={"message": "fixed"}):
+            result = get_non_error_response.func(message_type="next-step-main-and-side-ordered")
         assert result == "fixed"
 
-    def test_ending_session_returns_message(self):
-        with patch(_PATCH_TARGET, return_value={"errorMessage": "fixed"}):
-            result = get_non_error_response.func(message_type="ending-session")
+    def test_ending_comment_returns_message(self):
+        with patch(_PATCH_TARGET, return_value={"message": "fixed"}):
+            result = get_non_error_response.func(message_type="ending-comment")
         assert result == "fixed"
 
     def test_unknown_message_type_falls_back_to_all_messages(self):
         with patch(_PATCH_TARGET) as mock_choice:
-            mock_choice.return_value = {"errorMessage": "fallback"}
+            mock_choice.return_value = {"message": "fallback"}
             result = get_non_error_response.func(message_type="does-not-exist")
             pool = mock_choice.call_args[0][0]
         assert result == "fallback"
-        assert len(pool) == 4
+        assert len(pool) == 9
 
-    def test_single_item_pools_each_have_one_item(self):
-        for msg_type in ("greeting", "confirm-order", "next-order-step", "ending-session"):
+    def test_pool_sizes_match_json_counts(self):
+        expected_pool_sizes = {
+            "greeting": 2,
+            "next-step-only-main-ordered": 2,
+            "next-step-main-and-side-ordered": 1,
+            "next-step-generic": 2,
+            "ending-comment": 2,
+        }
+        for msg_type, expected_size in expected_pool_sizes.items():
             with patch(_PATCH_TARGET) as mock_choice:
-                mock_choice.return_value = {"errorMessage": "x"}
+                mock_choice.return_value = {"message": "x"}
                 get_non_error_response.func(message_type=msg_type)
                 pool = mock_choice.call_args[0][0]
-            assert len(pool) == 1, f"Expected pool size 1 for '{msg_type}', got {len(pool)}"
+            assert len(pool) == expected_size, f"Expected pool size {expected_size} for '{msg_type}', got {len(pool)}"
 
     def test_messages_loaded_once(self, reset_non_error_cache):
         real_open = open

@@ -48,12 +48,14 @@ Your job is to:
 When classifying the user's message:
 - "order_entry": User is trying to order food → call take_order, then:
     - If take_order returns an ERROR, call get_error_response with error_type "not-understandable"
-    - If take_order succeeds AND the order now contains at least one Main, one Side, AND one Drink, \
-call get_non_error_response with message_type "confirm-order"
-    - If take_order succeeds AND the order is still missing one or more item types, \
-call get_non_error_response with message_type "next-order-step"
+    - If take_order succeeds AND the order has ONLY a Main (no Side, no Drink), \
+call get_non_error_response with message_type "next-step-only-main-ordered"
+    - If take_order succeeds AND the order has a Main AND a Side (no Drink), \
+call get_non_error_response with message_type "next-step-main-and-side-ordered"
+    - If take_order succeeds AND the order has any other combination (all three types, or only Side/Drink), \
+call get_non_error_response with message_type "next-step-generic"
     - If the user says they want nothing else (e.g. "that's all", "I'm done"), \
-call get_non_error_response with message_type "confirm-order", then call summarize_complete_order
+call summarize_complete_order THEN call get_non_error_response with message_type "ending-comment"
 - "menu_question": User is asking about the menu → call answer_menu_question
 - "off_topic": Anything that is not a valid order or menu question → call get_error_response with the appropriate error_type:
     - "invalid-menu-item": user named a real food item (e.g. pizza, wings, sushi, tacos) that is NOT in the known menu aliases list above
