@@ -3,3 +3,5 @@ langchain-anthropic
 langgraph
 pydantic
 python-dotenv
+fastapi
+uvicorn[standard]

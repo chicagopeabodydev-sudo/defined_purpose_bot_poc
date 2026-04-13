@@ -1,0 +1,68 @@
+.sign-tag {
+  position: relative;
+  align-self: flex-start;
+  margin-top: 1rem;
+  margin-left: -1rem;
+
+  /* Aged paper */
+  background: #f2e8c8;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 24px,
+      rgba(160, 120, 60, 0.08) 24px,
+      rgba(160, 120, 60, 0.08) 25px
+    );
+  padding: 0.55rem 1rem 0.6rem;
+  border-radius: 2px;
+
+  /* Curled / uneven edges effect */
+  box-shadow:
+    1px 1px 0 #d4c090,
+    2px 2px 0 #c8b070,
+    3px 3px 4px rgba(0, 0, 0, 0.35),
+    inset 0 0 8px rgba(180, 140, 60, 0.15);
+
+  transform: rotate(-2.5deg);
+  z-index: 5;
+}
+
+/* Tape strip — top */
+.sign-tag::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(1deg);
+  width: 48px;
+  height: 18px;
+  background: rgba(230, 220, 180, 0.65);
+  border: 1px solid rgba(200, 190, 140, 0.5);
+  border-radius: 1px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Tape strip — bottom-right corner */
+.sign-tag::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  right: 14px;
+  transform: rotate(-3deg);
+  width: 36px;
+  height: 14px;
+  background: rgba(230, 220, 180, 0.55);
+  border: 1px solid rgba(200, 190, 140, 0.4);
+  border-radius: 1px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.sign-tag-text {
+  font-family: var(--font-sign);
+  font-size: 0.85rem;
+  color: #4a3520;
+  line-height: 1.5;
+  white-space: nowrap;
+  display: block;
+}

@@ -1,0 +1,110 @@
+/* ── Design tokens ─────────────────────────────────────── */
+:root {
+  --wood-dark:    #3d2b1f;
+  --wood-mid:     #5c3d2e;
+  --wood-light:   #7a5540;
+  --chalk-white:  #f0ece0;
+  --board-green:  #2d4a2d;
+  --board-dark:   #1a3a1a;
+  --accent:       #e07b39;
+  --accent-dim:   #b85f25;
+  --counter-top:  #8b6347;
+  --shadow:       rgba(0, 0, 0, 0.65);
+
+  --font-display: 'Permanent Marker', cursive;
+  --font-menu:    'Cabin Sketch', cursive;
+  --font-sign:    'Homemade Apple', cursive;
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--wood-dark);
+  font-family: var(--font-menu);
+  overflow-x: hidden;
+}
+
+/* ── App shell ─────────────────────────────────────────── */
+.app {
+  min-height: 100vh;
+  background-image: url('./assets/background.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ────────────────────────────────────────────── */
+.app-header {
+  text-align: center;
+  padding: 0.75rem 1rem 0.6rem;
+  background: linear-gradient(
+    180deg,
+    rgba(30, 18, 10, 0.92) 0%,
+    rgba(61, 43, 31, 0.82) 100%
+  );
+  border-bottom: 3px solid var(--accent);
+  position: relative;
+  z-index: 10;
+}
+
+.restaurant-name {
+  font-family: var(--font-display);
+  color: var(--chalk-white);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: 3px;
+  text-shadow:
+    2px  2px 0 var(--wood-dark),
+    -1px -1px 0 var(--wood-dark),
+    0    0   12px rgba(224, 123, 57, 0.35);
+}
+
+.restaurant-tagline {
+  font-family: var(--font-sign);
+  color: var(--accent);
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  margin-top: 0.1rem;
+  opacity: 0.9;
+}
+
+/* ── Scene layout ──────────────────────────────────────── */
+.scene {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 270px 1fr 360px;
+  align-items: stretch;
+  gap: 0.75rem;
+  padding: 0.75rem 0.75rem 0;
+  min-height: 0;
+}
+
+/* ── Center column (employee + counter) ────────────────── */
+.center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding-bottom: 0;
+}
+
+/* Simulated counter surface at the bottom */
+.counter-front {
+  width: 100%;
+  height: 28px;
+  background: linear-gradient(
+    180deg,
+    var(--counter-top)  0%,
+    var(--wood-mid) 60%,
+    var(--wood-dark) 100%
+  );
+  border-top: 3px solid #c4946a;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+  border-radius: 2px 2px 0 0;
+}
