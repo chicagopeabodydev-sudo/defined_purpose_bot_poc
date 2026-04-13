@@ -23,6 +23,22 @@ def answer_menu_question(question: str) -> str:
     Always includes item names, prices, calories, shiver time, and description.
     """
     menu = _load_menu()
+
+    if "calorie" in question.lower() and "neutral" in question.lower():
+        entry = menu[0]
+        options_str = ""
+        if "options" in entry:
+            options_str = f" Options: {', '.join(entry['options'])}."
+        example = (
+            f"  [{entry['itemType']}] {entry['menuItem']} — ${entry['price']:.2f} | "
+            f"{entry['calories']} cal | {entry['minutesToShiver']} min to shiver | "
+            f"{entry['description']}.{options_str}"
+        )
+        return (
+            "At Shiver Shack, food is calorie neutral because eating causes shivering, "
+            "and shivering burns the calories! For example:\n" + example
+        )
+
     lines = ["Here's what we've got at Shiver Shack:\n"]
     for entry in menu:
         options_str = ""

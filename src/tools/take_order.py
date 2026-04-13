@@ -46,4 +46,5 @@ def take_order(item: str, quantity: int) -> str:
 
     canonical_name = menu_entry["menuItem"]
     price = menu_entry["price"] * quantity
-    return f"Added {quantity}x {canonical_name} to your order. (${price:.2f})"
+    minutes = menu_entry["minutesToShiver"]
+    return f"Added {quantity}x {canonical_name} to your order. (${price:.2f}) | {minutes} min to shiver"
