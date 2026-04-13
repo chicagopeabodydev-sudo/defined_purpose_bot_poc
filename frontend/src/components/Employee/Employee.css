@@ -1,39 +1,29 @@
 .employee-wrap {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: 100%;
-  margin-top: auto;
+  position: absolute;
+  left: 1%;
+  bottom: 34%;
+  height: 54%;
+  width: auto;
 }
 
 .employee-img {
-  max-height: 400px;
-  max-width: 90%;
-  object-fit: contain;
-  filter:
-    drop-shadow(0 6px 20px rgba(0, 0, 0, 0.6))
-    drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+  height: 100%;
+  width: auto;
+  display: block;
   transform-origin: bottom center;
   animation: samn-idle 4s ease-in-out infinite;
-  transition: filter 0.3s ease;
-  image-rendering: crisp-edges;
 }
 
-/* Thinking state: subtle pulse instead of idle float */
 .employee--thinking .employee-img {
   animation: samn-thinking 0.9s ease-in-out infinite;
-  filter:
-    drop-shadow(0 6px 20px rgba(0, 0, 0, 0.6))
-    drop-shadow(0 0 8px rgba(224, 123, 57, 0.4));
 }
 
-/* ── Animations ────────────────────────────────────────── */
 @keyframes samn-idle {
-  0%,  100% { transform: translateY(0px); }
+  0%,  100% { transform: translateY(0); }
   50%        { transform: translateY(-5px); }
 }
 
 @keyframes samn-thinking {
-  0%,  100% { transform: scaleY(1)    translateY(0px); }
-  50%        { transform: scaleY(0.97) translateY(-2px); }
+  0%,  100% { transform: scaleY(1)    translateY(0); }
+  50%        { transform: scaleY(0.97) translateY(-3px); }
 }

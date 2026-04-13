@@ -1,15 +1,29 @@
+/*
+  Background image gap positions (as % of 3388 × 1700 rendered at 100% 100%):
+    Cash register right edge: x ≈ 13 %
+    Shiver Shack sign left edge: x ≈ 33 %
+    Counter top line (wall/brick boundary): y ≈ 63 % from top = 37 % from bottom
+
+  The chat panel sits in the open corrugated-wall area between those landmarks.
+*/
 .chat-panel {
+  position: absolute;
+
+  left: 19%;
+  width: 30%;
+  top: 4%;
+  bottom: 4%;
+
   display: flex;
   flex-direction: column;
-  background: rgba(28, 18, 10, 0.88);
-  border: 2px solid var(--wood-mid);
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
+  background: rgba(18, 12, 6, 0.82);
+  border: 2px solid rgba(122, 85, 64, 0.6);
+  border-radius: 6px;
   overflow: hidden;
-  align-self: stretch;
   box-shadow:
-    -4px 0 16px rgba(0, 0, 0, 0.4),
-    inset 0 0 30px rgba(0, 0, 0, 0.2);
+    0 4px 24px rgba(0, 0, 0, 0.55),
+    inset 0 0 20px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1px);
 }
 
 /* ── Header ─────────────────────────────────────────────── */

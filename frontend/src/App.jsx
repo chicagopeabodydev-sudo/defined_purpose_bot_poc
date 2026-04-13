@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { greet, chat } from './api/chatApi'
-import MenuBoard from './components/MenuBoard/MenuBoard'
 import Employee from './components/Employee/Employee'
 import ChatPanel from './components/ChatPanel/ChatPanel'
-import SignTag from './components/SignTag/SignTag'
 import './App.css'
 
 function App() {
@@ -50,27 +48,13 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1 className="restaurant-name">Shiver Shack</h1>
-        <p className="restaurant-tagline">a calorie-neutral cafe</p>
-      </header>
-
-      <main className="scene">
-        <MenuBoard />
-
-        <div className="center-column">
-          <SignTag />
-          <Employee isLoading={isLoading} />
-          <div className="counter-front" />
-        </div>
-
-        <ChatPanel
-          messages={messages}
-          onSend={sendMessage}
-          isEnded={isEnded}
-          isLoading={isLoading}
-        />
-      </main>
+      <Employee isLoading={isLoading} />
+      <ChatPanel
+        messages={messages}
+        onSend={sendMessage}
+        isEnded={isEnded}
+        isLoading={isLoading}
+      />
     </div>
   )
 }
