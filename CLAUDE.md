@@ -68,6 +68,11 @@ Two complementary layers are active. Do not remove either layer without discussi
 - When `off_topic_count` reaches `OFF_TOPIC_LIMIT` (3), `track_off_topic` terminates the conversation via `Command(goto="__end__")`; `log_decision` still fires and will log `off_topic=3` on the final turn
 - `structured_response` may be `None` on error or early-exit turns; `log_decision` falls back to `intent=unknown` in that case
 
+## Plans are created first
+Except for minor fixes and/or changes all modifications will happen in a two-step process:
+1. First, a plan will be created that outlines the steps to realize the requested change. Creating this plan may take multiple steps to add clarifications or choose from more than one implementation options. The final plan will be saved to the ./plans folder in a markdown (.md) format.
+2. Second, plans will be implemented using the saved plan's markdown file as guidance. After plans are fully implemented, how to test the changes should be provided.
+
 ## Do NOT Do This
 - Do not proactively make changes to files or code. Except  when explicitly instructed it's OK to make certain changes (for example, typos and/or minor style fixes), assume all changes require approval.
 
