@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import ChatMessage from '../ChatMessage/ChatMessage'
 import './ChatPanel.css'
 
-function ChatPanel({ messages, onSend, isEnded, isLoading }) {
+function ChatPanel({ messages, onSend, isEnded, isLoading, onReset }) {
   const [input, setInput] = useState('')
   const listRef = useRef(null)
 
@@ -67,6 +67,16 @@ function ChatPanel({ messages, onSend, isEnded, isLoading }) {
           aria-label="Send message"
         >
           Send
+        </button>
+        <button
+          className="chat-reset-btn"
+          type="button"
+          onClick={onReset}
+          disabled={isLoading}
+          aria-label="Reset conversation"
+          title="Start over"
+        >
+          Reset
         </button>
       </form>
     </aside>

@@ -10,21 +10,23 @@ function App() {
   const [isEnded, setIsEnded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    const initialize = async () => {
-      setIsLoading(true)
-      try {
-        const { thread_id, message } = await greet()
-        setThreadId(thread_id)
-        setMessages([{ role: 'bot', text: message }])
-      } catch {
-        setMessages([{ role: 'bot', text: 'Welcome to Shiver Shack!' }])
-      } finally {
-        setIsLoading(false)
-      }
+  const initialize = async () => {
+    setIsEnded(false)
+    setMessages([])
+    setThreadId(null)
+    setIsLoading(true)
+    try {
+      const { thread_id, message } = await greet()
+      setThreadId(thread_id)
+      setMessages([{ role: 'bot', text: message }])
+    } catch {
+      setMessages([{ role: 'bot', text: 'Welcome to Shiver Shack!' }])
+    } finally {
+      setIsLoading(false)
     }
-    initialize()
-  }, [])
+  }
+
+  useEffect(() => { initialize() }, [])
 
   const sendMessage = async (text) => {
     if (!text.trim() || isEnded || isLoading || !threadId) return
@@ -54,6 +56,7 @@ function App() {
         onSend={sendMessage}
         isEnded={isEnded}
         isLoading={isLoading}
+        onReset={initialize}
       />
     </div>
   )
