@@ -11,8 +11,8 @@ class TestAnswerMenuQuestion:
 
     def test_contains_all_menu_items(self):
         result = answer_menu_question.func(question="What do you have?")
-        assert "Cheese Burrrrrrrrger" in result
-        assert "Chicken Burrrrrrrrito" in result
+        assert "Cheese Brrrrrrrrger" in result
+        assert "Chicken Brrrrrrrrito" in result
         assert "Frozen Fries" in result
         assert "Shakes" in result
 

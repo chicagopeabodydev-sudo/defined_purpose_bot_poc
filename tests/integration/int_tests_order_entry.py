@@ -11,7 +11,7 @@ class TestOrderEntry:
         assert result["structured_response"].intent == "order_entry"
         tool_msgs = get_tool_messages(result, "take_order")
         assert len(tool_msgs) > 0
-        assert "Cheese Burrrrrrrrger" in tool_msgs[0].content
+        assert "Cheese Brrrrrrrrger" in tool_msgs[0].content
         assert "ERROR" not in tool_msgs[0].content
 
     def test_order_valid_fries_by_alias(self, thread_id):
@@ -36,7 +36,7 @@ class TestOrderEntry:
         assert result["structured_response"].intent == "order_entry"
         tool_msgs = get_tool_messages(result, "take_order")
         assert len(tool_msgs) > 0
-        assert "Chicken Burrrrrrrrito" in tool_msgs[0].content
+        assert "Chicken Brrrrrrrrito" in tool_msgs[0].content
         assert "ERROR" not in tool_msgs[0].content
 
     def test_order_valid_quantity_boundary_max(self, thread_id):
@@ -44,7 +44,7 @@ class TestOrderEntry:
         assert result["structured_response"].intent == "order_entry"
         tool_msgs = get_tool_messages(result, "take_order")
         assert len(tool_msgs) > 0
-        assert "5x Cheese Burrrrrrrrger" in tool_msgs[0].content
+        assert "5x Cheese Brrrrrrrrger" in tool_msgs[0].content
         assert "ERROR" not in tool_msgs[0].content
 
     def test_order_invalid_quantity_over_limit(self, thread_id):

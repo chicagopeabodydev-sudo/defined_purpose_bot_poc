@@ -6,6 +6,7 @@ from langchain.agents.middleware import after_model
 from langchain_core.messages import AIMessage, ToolMessage
 from langgraph.runtime import Runtime
 from langgraph.types import Command
+from src.tools.take_order import _find_menu_item
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,8 @@ class OrderState(AgentState):
 
     off_topic_count: NotRequired[int]
     order_items: NotRequired[list[dict]]
+    total_price: NotRequired[float]
+    minutes_to_shiver: NotRequired[int]
 
 
 @after_model(state_schema=OrderState)
@@ -29,26 +32,37 @@ def track_order(state: OrderState, runtime: Runtime) -> dict[str, Any] | None:
     """
     messages = state["messages"]
     current_items: list[dict] = list(state.get("order_items") or [])
+    current_price: float = state.get("total_price") or 0.0
+    current_minutes: int = state.get("minutes_to_shiver") or 0
     updated = False
 
     for msg in reversed(messages):
         if not isinstance(msg, ToolMessage):
             break
         if msg.name == "take_order" and not msg.content.startswith("ERROR:"):
-            # Result format: "Added {qty}x {name} to your order. ($X.XX)"
+            # Result format: "Added {qty}x {name} to your order. ($X.XX) | N min to shiver"
             # Extract qty and name for state storage
             try:
-                content = msg.content  # e.g. "Added 2x Frozen Fries to your order. ($5.90)"
+                content = msg.content
                 after_added = content[len("Added "):]
                 qty_str, rest = after_added.split("x ", 1)
                 item_name = rest.split(" to your order")[0]
-                current_items.append({"item": item_name, "quantity": int(qty_str)})
+                qty = int(qty_str)
+                current_items.append({"item": item_name, "quantity": qty})
+                menu_entry = _find_menu_item(item_name)
+                if menu_entry:
+                    current_price += menu_entry["price"] * qty
+                    current_minutes += menu_entry["minutesToShiver"]
                 updated = True
             except (ValueError, IndexError):
                 pass
 
     if updated:
-        return {"order_items": current_items}
+        return {
+            "order_items": current_items,
+            "total_price": current_price,
+            "minutes_to_shiver": current_minutes,
+        }
     return None
 
 

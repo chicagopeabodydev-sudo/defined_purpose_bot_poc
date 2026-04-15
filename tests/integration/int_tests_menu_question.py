@@ -11,8 +11,8 @@ class TestMenuQuestion:
         tool_msgs = get_tool_messages(result, "answer_menu_question")
         assert len(tool_msgs) > 0
         content = tool_msgs[0].content
-        assert "Cheese Burrrrrrrrger" in content
-        assert "Chicken Burrrrrrrrito" in content
+        assert "Cheese Brrrrrrrrger" in content
+        assert "Chicken Brrrrrrrrito" in content
         assert "Frozen Fries" in content
         assert "Shakes" in content
 

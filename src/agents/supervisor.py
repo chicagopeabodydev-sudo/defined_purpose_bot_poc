@@ -55,7 +55,8 @@ call get_non_error_response with message_type "next-step-main-and-side-ordered"
     - If take_order succeeds AND the order has any other combination (all three types, or only Side/Drink), \
 call get_non_error_response with message_type "next-step-generic"
     - If the user says they want nothing else (e.g. "that's all", "I'm done"), \
-call summarize_complete_order THEN call get_non_error_response with message_type "ending-comment"
+call summarize_complete_order with the list of ordered items observed in the conversation history, \
+THEN call get_non_error_response with message_type "ending-comment"
 - "menu_question": User is asking about the menu → call answer_menu_question
 - "off_topic": Anything that is not a valid order or menu question → call get_error_response with the appropriate error_type:
     - "invalid-menu-item": user named a real food item (e.g. pizza, wings, sushi, tacos) that is NOT in the known menu aliases list above

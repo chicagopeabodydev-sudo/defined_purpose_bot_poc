@@ -25,3 +25,9 @@ def get_tool_messages(result: dict, tool_name: str) -> list:
 @pytest.fixture
 def thread_id():
     return str(uuid.uuid4())
+
+
+@pytest.fixture(scope="session", autouse=True)
+def deterministic_model():
+    import src.agents.supervisor as sup
+    sup.model.temperature = 0

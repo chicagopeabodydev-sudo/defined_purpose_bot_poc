@@ -12,12 +12,12 @@ class TestTakeOrder:
 
     def test_valid_order_by_alias_burger(self):
         result = take_order.func(item="burger", quantity=1)
-        assert "Cheese Burrrrrrrrger" in result
+        assert "Cheese Brrrrrrrrger" in result
         assert "ERROR" not in result
 
     def test_valid_order_by_alias_burrito(self):
         result = take_order.func(item="burrito", quantity=1)
-        assert "Chicken Burrrrrrrrito" in result
+        assert "Chicken Brrrrrrrrito" in result
         assert "ERROR" not in result
 
     def test_valid_order_by_alias_fries(self):

@@ -3,9 +3,10 @@ import json
 import uuid
 import random
 import logging
+import concurrent.futures
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -23,6 +24,8 @@ logging.basicConfig(
 from src.agents.supervisor import supervisor
 
 _BASE = Path(__file__).parent
+_TIMEOUT = int(os.getenv("INVOKE_TIMEOUT_SECONDS", "30"))
+_FALLBACK = "Sorry, something went wrong — I couldn't process that. Please try again."
 _NON_ERROR_PATH = _BASE / "resources" / "non_error_messages.json"
 
 
@@ -68,10 +71,16 @@ def greet():
 @app.post("/api/chat", response_model=ChatResponse)
 def chat(req: ChatRequest):
     config = {"configurable": {"thread_id": req.thread_id}}
-    result = supervisor.invoke(
-        {"messages": [{"role": "user", "content": req.message}]},
-        config=config,
-    )
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(
+            supervisor.invoke,
+            {"messages": [{"role": "user", "content": req.message}]},
+            config,
+        )
+        try:
+            result = future.result(timeout=_TIMEOUT)
+        except concurrent.futures.TimeoutError:
+            raise HTTPException(status_code=503, detail=_FALLBACK)
     structured = result.get("structured_response")
     last_message = result["messages"][-1]
 

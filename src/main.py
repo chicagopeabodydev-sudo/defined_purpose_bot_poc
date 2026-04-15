@@ -4,6 +4,7 @@ import uuid
 import json
 import logging
 import random
+import concurrent.futures
 from dotenv import load_dotenv
 from langchain_core.runnables import RunnableConfig
 
@@ -23,6 +24,8 @@ logging.basicConfig(
 from src.agents.supervisor import supervisor
 
 _NON_ERROR_PATH = os.path.join(os.path.dirname(__file__), "resources", "non_error_messages.json")
+_TIMEOUT = int(os.getenv("INVOKE_TIMEOUT_SECONDS", "30"))
+_FALLBACK = "Sorry, something went wrong — I couldn't process that. Please try again."
 
 def _get_greeting() -> str:
     with open(_NON_ERROR_PATH) as f:
@@ -47,10 +50,17 @@ def run():
         if not user_input:
             continue
 
-        result = supervisor.invoke(
-            {"messages": [{"role": "user", "content": user_input}]},
-            config=config,
-        )
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(
+                supervisor.invoke,
+                {"messages": [{"role": "user", "content": user_input}]},
+                config,
+            )
+            try:
+                result = future.result(timeout=_TIMEOUT)
+            except concurrent.futures.TimeoutError:
+                print(f"\nEmployee: {_FALLBACK}\n")
+                continue
 
         structured = result.get("structured_response")
         last_message = result["messages"][-1]

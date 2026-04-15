@@ -1,6 +1,6 @@
 [
   {
-    "menuItem": "Cheese Burrrrrrrrger",
+    "menuItem": "Cheese Brrrrrrrrger",
     "itemType": "Main",
     "aliases": [
       "burger",
@@ -8,20 +8,20 @@
       "cheeseburger",
       "cheese burger"
     ],
-    "price": 4.95,
+    "price": 5.95,
     "calories": 550,
     "minutesToShiver": 12,
     "description": "two beef patties, cheese, lettuce, tomato, pickle, special sauce",
     "options": ["add extra of any topping", "remove any topping"]
   },
   {
-    "menuItem": "Chicken Burrrrrrrrito",
+    "menuItem": "Chicken Brrrrrrrrito",
     "itemType": "Main",
     "aliases": [
       "burrito",
       "chicken burrito"
     ],
-    "price": 5.95,
+    "price": 6.95,
     "calories": 650,
     "minutesToShiver": 18,
     "description": "spicy chicken, cheese, lettuce, tomato, salsa",

@@ -40,7 +40,7 @@ User successfully places and order that contains one or more menu items, and a s
 - menu and menu-items in a JSON format
 - error messages in a JSON format
 - non-error messages in a JSON format
-- "how-it-works" documentation
+- "shiver-shack-info" documentation
 
 ## Enumerated Objects
 
