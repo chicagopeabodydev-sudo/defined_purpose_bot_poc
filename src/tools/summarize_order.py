@@ -1,7 +1,10 @@
 import json
+import logging
 import os
 
 from langchain.tools import tool
+
+logger = logging.getLogger(__name__)
 from src.models.order_entry import OrderEntry
 from src.models.complete_order import CompleteOrder
 
@@ -30,6 +33,7 @@ def _find_menu_item(item_name: str) -> dict | None:
 @tool
 def summarize_order_entry(item: str, quantity: int) -> str:
     """Format a single order entry as a readable string."""
+    logger.debug("summarize_order_entry item=%r quantity=%d", item, quantity)
     entry = OrderEntry(item=item, quantity=quantity)
     return f"{entry.quantity}x {entry.item}"
 
@@ -40,6 +44,7 @@ def summarize_complete_order(items: list[OrderEntry]) -> str:
 
     Prices and shiver times are looked up from the menu automatically.
     """
+    logger.debug("summarize_complete_order called with %d items", len(items))
     order_entries = [i if isinstance(i, OrderEntry) else OrderEntry(**i) for i in items]
 
     total_price = 0.0
@@ -62,4 +67,5 @@ def summarize_complete_order(items: list[OrderEntry]) -> str:
     lines.append(f"\nTotal: ${order.total_price:.2f}")
     lines.append(f"Minutes to shiver: {order.minutes_to_shiver} min")
     lines.append("\nStay cold! 🥶")
+    logger.debug("summarize_complete_order total_price=%.2f total_minutes=%d", total_price, total_minutes)
     return "\n".join(lines)

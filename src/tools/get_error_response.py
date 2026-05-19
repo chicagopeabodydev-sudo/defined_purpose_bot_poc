@@ -1,7 +1,10 @@
 import json
+import logging
 import os
 import random
 from langchain.tools import tool
+
+logger = logging.getLogger(__name__)
 
 _ERROR_PATH = os.path.join(os.path.dirname(__file__), "..", "resources", "off_topic_messages.json")
 
@@ -24,6 +27,7 @@ def get_error_response(error_type: str, level: int = 1) -> str:
     level is the escalation level for this session (1=first off-topic, 2=second, 3+=final warning).
     At level 3 or higher, returns the universal final-warning message regardless of error_type.
     """
+    logger.debug("get_error_response called error_type=%r level=%d", error_type, level)
     messages = _load_error_messages()
 
     if level >= 3:
@@ -37,4 +41,5 @@ def get_error_response(error_type: str, level: int = 1) -> str:
     if not matches:
         matches = [m for m in messages if m["errorType"] == "simply-unrelated"]
 
+    logger.debug("get_error_response matched %d candidates error_type=%r level=%d", len(matches), error_type, level)
     return random.choice(matches)["errorMessage"]

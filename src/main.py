@@ -21,6 +21,22 @@ logging.basicConfig(
     encoding="utf-8" if log_file else None,
 )
 
+
+class _SafeFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        if not hasattr(record, "thread_id"):
+            record.thread_id = "-"
+        return super().format(record)
+
+
+_root_handler = logging.root.handlers[0]
+_root_handler.setFormatter(
+    _SafeFormatter(
+        fmt="%(asctime)s [%(levelname)s] %(name)s [%(thread_id)s] — %(message)s",
+        datefmt="%H:%M:%S",
+    )
+)
+
 from src.agents.supervisor import supervisor
 
 _NON_ERROR_PATH = os.path.join(os.path.dirname(__file__), "resources", "non_error_messages.json")

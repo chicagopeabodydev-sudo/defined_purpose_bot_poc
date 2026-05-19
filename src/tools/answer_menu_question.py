@@ -1,6 +1,9 @@
 import json
+import logging
 import os
 from langchain.tools import tool
+
+logger = logging.getLogger(__name__)
 
 _MENU_PATH = os.path.join(os.path.dirname(__file__), "..", "resources", "menu.json")
 
@@ -22,6 +25,7 @@ def answer_menu_question(question: str) -> str:
     Returns a formatted summary of menu items relevant to the question.
     Always includes item names, prices, calories, shiver time, and description.
     """
+    logger.debug("answer_menu_question called question=%.80r", question)
     menu = _load_menu()
 
     if "calorie" in question.lower() and "neutral" in question.lower():
@@ -49,4 +53,5 @@ def answer_menu_question(question: str) -> str:
             f"{entry['calories']} cal | {entry['minutesToShiver']} min to shiver | "
             f"{entry['description']}.{options_str}"
         )
+    logger.debug("answer_menu_question returning %d menu items", len(menu))
     return "\n".join(lines)
